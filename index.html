@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Claude Code Mods · Deep Research Board Tutorial · Ken Huang</title>
+  <meta name="description" content="20-slide tutorial: learn Claude Code mods by building a Deep Research Board — observe sources, rewrite prompts, gate weak conclusions.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Kalam:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=mods2">
+</head>
+<body>
+  <header class="bar">
+    <div class="bar__brand">
+      <span class="bar__logo">🧩</span>
+      <span>CLAUDE CODE MODS</span>
+    </div>
+    <div class="bar__title" id="slideTitle">Getting Started with Claude Code Mods</div>
+    <div class="bar__actions">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" class="lang__btn is-on" data-lang="en">EN</button>
+        <button type="button" class="lang__btn" data-lang="zh">中文</button>
+      </div>
+      <button type="button" class="bar__btn" id="fsBtn" aria-label="Toggle Fullscreen (F)" title="Toggle Fullscreen (F)">
+        <span class="bar__btn-label" data-i18n="ui.fullscreen">Full Screen</span>
+      </button>
+      <a href="https://claude.dev/blog/getting-started-with-claude-code-mods/" target="_blank" rel="noopener" class="bar__cta bar__cta--alt" data-i18n="ui.repo">Official Guide ↗</a>
+      <a href="https://distributedapps.ai/" target="_blank" rel="noopener" class="bar__cta" data-i18n="ui.launch">DistributedApps ↗</a>
+    </div>
+  </header>
+  <main class="deck" id="deck">
+    <!-- SLIDE 1: HERO -->
+    <section class="slide is-active slide--dark" id="s1" data-slide="1" data-title="Getting Started with Claude Code Mods">
+      <div class="slide__in center">
+        <div class="hero__grid"></div>
+        <div class="eyebrow" data-i18n="hero.eyebrow">Tutorial · Claude Code · Mods API</div>
+        <h1 class="hero__title" data-i18n="hero.title">GETTING STARTED WITH CLAUDE CODE MODS</h1>
+        <div class="hero__acronym" data-i18n="hero.acronym" data-i18n-html="true">
+          <b>Example</b> Deep Research Board · <b>Learn</b> observe / rewrite / answer
+        </div>
+        <p class="hero__sub" data-i18n="hero.sub" data-i18n-html="true">
+          Build a <strong>Deep Research Agent board</strong> — a live scoreboard of sources and progress — to learn how mods work.
+        </p>
+        <div class="hero__presenter">
+          <p data-i18n="hero.by" data-i18n-html="true">
+            Presented by <strong>Ken Huang, CISSP</strong><br/>Adjunct Professor, USF · CSA AI Safety Co-Chair · CEO, DistributedApps.ai
+          </p>
+        </div>
+        <div class="hero__actions">
+          <a href="#2" class="bar__cta" data-i18n="hero.start">Start Tutorial ➔</a>
+          <a href="https://claude.dev/blog/getting-started-with-claude-code-mods/" target="_blank" rel="noopener" class="bar__cta bar__cta--alt" data-i18n="hero.spec">Official API Guide ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: ABOUT -->
+    <section class="slide" id="s2" data-slide="2" data-title="About the Instructor: Ken Huang, CISSP">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="about.kicker">Instructor</span>
+        <h2 class="h2" data-i18n="about.h2">Ken Huang, CISSP</h2>
+        <div id="slide-content-wrap" class="instructor-slide-grid">
+          <div class="instructor-info-col">
+            <svg viewBox="0 0 800 110" class="slide-svg">
+              <defs>
+                <clipPath id="headshot-circle">
+                  <circle cx="65" cy="55" r="32"></circle>
+                </clipPath>
+              </defs>
+              <rect x="15" y="6" width="770" height="98" rx="14" fill="#FAF9F5" stroke="#D97757" stroke-width="2.5"></rect>
+              <circle cx="65" cy="55" r="34" fill="#F5E6DF" stroke="#BD5D3A" stroke-width="2.5"></circle>
+              <image href="assets/images/ken-head-shot.png" x="31" y="21" width="68" height="68" clip-path="url(#headshot-circle)" preserveAspectRatio="xMidYMid slice"></image>
+              <text x="115" y="44" fill="#141413" font-family="Inter" font-size="16.5" font-weight="900">KEN HUANG, CISSP — INSTRUCTOR &amp; AI SAFETY RESEARCHER</text>
+              <text x="115" y="68" fill="#6B6B63" font-family="Inter" font-size="12" font-weight="600">Author, Harness Engineering &amp; MAESTRO | Adjunct Professor, University of San Francisco</text>
+              <text x="115" y="88" fill="#BD5D3A" font-family="Inter" font-size="11.5" font-weight="750">CSA Fellow &amp; Co-Chair | OWASP AIVSS Lead | AIUC-1 Consortium | Schmidt Sciences</text>
+            </svg>
+            <ul class="main-bullets dense-columns">
+              <li class="bullet-group"><div class="primary-bullet" data-i18n="about.b1">🎓 Adjunct Professor, USF · AI author (Cambridge, Springer, Wiley, Packt, CMP, PKUP)</div></li>
+              <li class="bullet-group"><div class="primary-bullet" data-i18n="about.b2">🛡️ CSA Fellow (MAESTRO, AICM) · OWASP AIVSS Lead</div></li>
+              <li class="bullet-group"><div class="primary-bullet" data-i18n="about.b3">🚀 CEO, DistributedApps.ai</div></li>
+            </ul>
+          </div>
+          <div class="author-books-card">
+            <div class="author-books-header">
+              <span>📚 AI Books &amp; Academic Publications</span>
+              <a href="https://www.amazon.com/stores/author/B0D3J7L7GN" target="_blank" rel="noopener noreferrer">Amazon Author Page ➔</a>
+            </div>
+            <div class="books-pubs-stack">
+              <div class="books-gallery-grid">
+                <a href="https://www.amazon.com/dp/3031900251" target="_blank" rel="noopener noreferrer" class="book-item-card" title="Agentic AI: Theories and Practices (Springer)">
+                  <img src="assets/images/books/springer_agentic_ai.jpg" alt="Agentic AI (Springer)" class="book-cover-img">
+                  <div class="book-item-title">Agentic AI</div>
+                  <div class="book-publisher-tag">SPRINGER</div>
+                </a>
+                <a href="https://www.amazon.com/dp/3031448839" target="_blank" rel="noopener noreferrer" class="book-item-card" title="Beyond AI (Springer)">
+                  <img src="assets/images/books/springer_beyond_ai.jpg" alt="Beyond AI (Springer)" class="book-cover-img">
+                  <div class="book-item-title">Beyond AI</div>
+                  <div class="book-publisher-tag">SPRINGER</div>
+                </a>
+                <a href="https://www.amazon.com/dp/3031542517" target="_blank" rel="noopener noreferrer" class="book-item-card" title="Generative AI Security (Springer)">
+                  <img src="assets/images/books/springer_generative_ai_security.jpg" alt="GenAI Security (Springer)" class="book-cover-img">
+                  <div class="book-item-title">GenAI Security</div>
+                  <div class="book-publisher-tag">SPRINGER</div>
+                </a>
+                <a href="https://www.amazon.com/dp/3031901002" target="_blank" rel="noopener noreferrer" class="book-item-card" title="Securing AI Agents (Springer)">
+                  <img src="assets/images/books/springer_securing_ai_agents.jpg" alt="Securing AI Agents (Springer)" class="book-cover-img">
+                  <div class="book-item-title">Securing Agents</div>
+                  <div class="book-publisher-tag">SPRINGER</div>
+                </a>
+                <a href="https://www.amazon.com/dp/1009384467" target="_blank" rel="noopener noreferrer" class="book-item-card" title="Web3 (Cambridge)">
+                  <img src="assets/images/books/cambridge_web3.jpg" alt="Web3 (Cambridge UP)" class="book-cover-img">
+                  <div class="book-item-title">Web3 &amp; Economy</div>
+                  <div class="book-publisher-tag">CAMBRIDGE</div>
+                </a>
+                <a href="https://www.amazon.com/dp/1394186524" target="_blank" rel="noopener noreferrer" class="book-item-card" title="Blockchain and Web3 (Wiley)">
+                  <img src="assets/images/books/wiley_blockchain_web3.jpg" alt="Blockchain &amp; Web3 (Wiley)" class="book-cover-img">
+                  <div class="book-item-title">Blockchain Web3</div>
+                  <div class="book-publisher-tag">WILEY</div>
+                </a>
+                <a href="https://www.amazon.com/dp/B0HF3F86YM" target="_blank" rel="noopener noreferrer" class="book-item-card" title="Harness Engineering (Packt)">
+                  <img src="assets/images/books/harness_engineering.jpg" alt="Harness Engineering" class="book-cover-img">
+                  <div class="book-item-title">Harness Eng.</div>
+                  <div class="book-publisher-tag">BEST SELLER</div>
+                </a>
+                <a href="https://www.amazon.com/dp/1807785017" target="_blank" rel="noopener noreferrer" class="book-item-card" title="OpenClaw AI in Production (Packt)">
+                  <img src="assets/images/books/openclaw_ai_in_production.jpg" alt="OpenClaw AI in Production" class="book-cover-img">
+                  <div class="book-item-title">OpenClaw AI</div>
+                  <div class="book-publisher-tag">PACKT</div>
+                </a>
+                <a href="https://www.amazon.com/dp/B0H8JW9XFN" target="_blank" rel="noopener noreferrer" class="book-item-card" title="Engineering Agentic AI with Claude">
+                  <img src="assets/images/books/engineering_agentic_ai_claude.jpg" alt="Engineering Agentic AI with Claude" class="book-cover-img">
+                  <div class="book-item-title">Claude Agentic</div>
+                  <div class="book-publisher-tag">NEW RELEASE</div>
+                </a>
+                <a href="https://www.amazon.com/dp/3032336686" target="_blank" rel="noopener noreferrer" class="book-item-card" title="Humanoid Robots and Physical AI: Reshaping Work, Society, and Human Purpose (Springer)">
+                  <img src="assets/images/books/springer_humanoid_robots.jpg" alt="Humanoid Robots and Physical AI (Springer)" class="book-cover-img">
+                  <div class="book-item-title">Humanoid Robots</div>
+                  <div class="book-publisher-tag">SPRINGER</div>
+                </a>
+              </div>
+              <div class="publishers-section">
+                <div class="publishers-header">
+                  <span class="publishers-title" data-i18n="about.publishers_title">My books were published by Academic &amp; Global Publishers</span>
+                  <span class="publishers-sub" data-i18n="about.publishers_sub">Peer-Reviewed Books, Monographs &amp; Handbooks</span>
+                </div>
+                <div class="publishers-grid">
+                  <a href="https://www.cambridge.org/" target="_blank" rel="noopener noreferrer" class="publisher-card" title="Cambridge University Press">
+                    <div class="publisher-logo-wrap">
+                      <img src="assets/images/publishers/cambridge_university_press.svg" alt="Cambridge University Press" class="publisher-logo-img">
+                    </div>
+                    <div class="publisher-tag" data-i18n="pub.cambridge">Cambridge UP</div>
+                  </a>
+                  <a href="https://link.springer.com/" target="_blank" rel="noopener noreferrer" class="publisher-card" title="Springer (Springer Nature)">
+                    <div class="publisher-logo-wrap">
+                      <img src="assets/images/publishers/springer.svg" alt="Springer" class="publisher-logo-img">
+                    </div>
+                    <div class="publisher-tag" data-i18n="pub.springer">Springer</div>
+                  </a>
+                  <a href="https://www.wiley.com/" target="_blank" rel="noopener noreferrer" class="publisher-card" title="Wiley">
+                    <div class="publisher-logo-wrap">
+                      <img src="assets/images/publishers/wiley.svg" alt="Wiley" class="publisher-logo-img">
+                    </div>
+                    <div class="publisher-tag" data-i18n="pub.wiley">Wiley</div>
+                  </a>
+                  <a href="https://www.packtpub.com/" target="_blank" rel="noopener noreferrer" class="publisher-card" title="Packt Publishing">
+                    <div class="publisher-logo-wrap">
+                      <img src="assets/images/publishers/packt.svg" alt="Packt" class="publisher-logo-img">
+                    </div>
+                    <div class="publisher-tag" data-i18n="pub.packt">Packt</div>
+                  </a>
+                  <a href="http://www.cmpbook.com/" target="_blank" rel="noopener noreferrer" class="publisher-card" title="China Machine Press (机械工业出版社)">
+                    <div class="publisher-logo-wrap">
+                      <img src="assets/images/publishers/china_machine_press.png?v=20261025b" alt="China Machine Press" class="publisher-logo-img">
+                    </div>
+                    <div class="publisher-tag" data-i18n="pub.cmp">China Machine Press</div>
+                  </a>
+                  <a href="https://www.pup.cn/" target="_blank" rel="noopener noreferrer" class="publisher-card" title="Beijing University Press (北京大学出版社)">
+                    <div class="publisher-logo-wrap">
+                      <img src="assets/images/publishers/beijing_university_press.svg" alt="Beijing University Press" class="publisher-logo-img">
+                    </div>
+                    <div class="publisher-tag" data-i18n="pub.pkup">Beijing Univ. Press</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide slide--alt" id="s3" data-slide="3" data-title="Tutorial Agenda">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s3.kicker">Agenda</span>
+        <h2 class="h2" data-i18n="s3.h2">Build a Deep Research Board</h2>
+        <p class="lead" data-i18n="s3.lead">Learn mods by building something you already understand: a research progress board.</p>
+        <div class="two-col">
+          <div class="card card--focus">
+            <h3 class="card__title">
+              <span class="tag tag--orange">Path</span>
+              <span data-i18n="s3.col1_t">20-slide path</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s3.c1_1">• Mental model: plugins, hooks, three moves.</li>
+              <li data-i18n="s3.c1_2">• Build: Deep Research Board (observe + UI).</li>
+              <li data-i18n="s3.c1_3">• Stretch: gate weak answers; open a sources pane.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="agenda-mods"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 4 -->
+    <section class="slide" id="s4" data-slide="4" data-title="What Is a Claude Code Mod?">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s4.kicker">Concept</span>
+        <h2 class="h2" data-i18n="s4.h2">What Is a Mod?</h2>
+        <p class="lead" data-i18n="s4.lead">A small JavaScript or TypeScript plugin that lives inside your Claude Code session.</p>
+        <div class="two-col">
+          <div class="card card--focus">
+            <h3 class="card__title">
+              <span class="tag tag--blue">Mod</span>
+              <span data-i18n="s4.col1_t">In plain words</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s4.c1_1">• Watch what Claude is doing (tools, turns).</li>
+              <li data-i18n="s4.c1_2">• Change prompts or block unsafe/weak steps.</li>
+              <li data-i18n="s4.c1_3">• Draw a live board in the terminal UI.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="what-is-mod"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 5 -->
+    <section class="slide slide--alt" id="s5" data-slide="5" data-title="Mods vs Settings Hooks">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s5.kicker">Compare</span>
+        <h2 class="h2" data-i18n="s5.h2">Why Not Just Settings?</h2>
+        <p class="lead" data-i18n="s5.lead">Settings hooks fire a shell per event. Mods stay loaded and can keep score.</p>
+        <div class="two-col">
+          <div class="card card--defense">
+            <h3 class="card__title">
+              <span class="tag tag--orange">Why</span>
+              <span data-i18n="s5.col1_t">For a research agent</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s5.c1_1">• Remember how many sources you already have.</li>
+              <li data-i18n="s5.c1_2">• Redraw a board after every fetch.</li>
+              <li data-i18n="s5.c1_3">• Open a pane or register /research.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="mods-vs-settings"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 6 -->
+    <section class="slide" id="s6" data-slide="6" data-title="Anatomy of a Mod Plugin">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s6.kicker">Structure</span>
+        <h2 class="h2" data-i18n="s6.h2">Anatomy of a Mod</h2>
+        <p class="lead" data-i18n="s6.lead">Same shape as any Claude Code plugin — one module does the work.</p>
+        <div class="two-col">
+          <div class="card card--defense">
+            <h3 class="card__title">
+              <span class="tag tag--green">Parts</span>
+              <span data-i18n="s6.col1_t">Required pieces</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s6.c1_1">• plugin.json — name and description.</li>
+              <li data-i18n="s6.c1_2">• hooks.json — points at research-board.mjs.</li>
+              <li data-i18n="s6.c1_3">• register(on) — attach observe / rewrite / answer hooks.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="mod-anatomy"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 7 -->
+    <section class="slide slide--alt" id="s7" data-slide="7" data-title="Three Moves for a Research Mod">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s7.kicker">API Core</span>
+        <h2 class="h2" data-i18n="s7.h2">Observe · Rewrite · Answer</h2>
+        <p class="lead" data-i18n="s7.lead">Every hook either watches, changes the event, or stops it.</p>
+        <div class="two-col">
+          <div class="card card--focus">
+            <h3 class="card__title">
+              <span class="tag tag--orange">Moves</span>
+              <span data-i18n="s7.col1_t">Research examples</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s7.c1_1">• Observe — count WebFetch / Read as sources.</li>
+              <li data-i18n="s7.c1_2">• Rewrite — inject a research checklist into the prompt.</li>
+              <li data-i18n="s7.c1_3">• Answer — deny a final conclusion until sources ≥ 5.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="three-moves"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 8 -->
+    <section class="slide" id="s8" data-slide="8" data-title="Example: Deep Research Board">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s8.kicker">Example</span>
+        <h2 class="h2" data-i18n="s8.h2">Deep Research Board</h2>
+        <p class="lead" data-i18n="s8.lead">A live scoreboard above the prompt while Claude researches.</p>
+        <div class="two-col">
+          <div class="card card--defense">
+            <h3 class="card__title">
+              <span class="tag tag--teal">Board</span>
+              <span data-i18n="s8.col1_t">What you see</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s8.c1_1">• Question + status (idle / researching / ready).</li>
+              <li data-i18n="s8.c1_2">• Sources found vs target (e.g. 5/5).</li>
+              <li data-i18n="s8.c1_3">• Latest domains + claim count.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="research-board"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 9 -->
+    <section class="slide slide--alt" id="s9" data-slide="9" data-title="Shortcut: Describe It to Claude">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s9.kicker">Shortcut</span>
+        <h2 class="h2" data-i18n="s9.h2">Let Claude Write the Mod</h2>
+        <p class="lead" data-i18n="s9.lead">You do not need the API first — describe the board in plain language.</p>
+        <div class="two-col">
+          <div class="card card--focus">
+            <h3 class="card__title">
+              <span class="tag tag--orange">Flow</span>
+              <span data-i18n="s9.col1_t">Say this</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s9.c1_1">• "Make a mod: Deep Research Board above the prompt."</li>
+              <li data-i18n="s9.c1_2">• "Count WebFetch/Read as sources; show 5/5 target."</li>
+              <li data-i18n="s9.c1_3">• Allow hot reload; tweak rules in chat.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="claude-builds"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 10 -->
+    <section class="slide" id="s10" data-slide="10" data-title="Step 1: Folder & Manifest">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s10.kicker">Step 1</span>
+        <h2 class="h2" data-i18n="s10.h2">Create the Folder</h2>
+        <p class="lead" data-i18n="s10.lead">Claude Code 2.1.287+. Same plugin layout as the official guide.</p>
+        <div class="two-col">
+          <div class="card card--defense">
+            <h3 class="card__title">
+              <span class="tag tag--green">Setup</span>
+              <span data-i18n="s10.col1_t">Checklist</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s10.c1_1">• claude --version ≥ 2.1.287.</li>
+              <li data-i18n="s10.c1_2">• Name the plugin deep-research-board.</li>
+              <li data-i18n="s10.c1_3">• hooks.json → ./research-board.mjs.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="folder-layout"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 11 -->
+    <section class="slide slide--alt" id="s11" data-slide="11" data-title="Step 2: Draw the Board">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s11.kicker">Step 2</span>
+        <h2 class="h2" data-i18n="s11.h2">Draw Above the Prompt</h2>
+        <p class="lead" data-i18n="s11.lead">Hook ui.render on AbovePrompt — empty by default, perfect for a board.</p>
+        <div class="two-col">
+          <div class="card card--focus">
+            <h3 class="card__title">
+              <span class="tag tag--orange">UI</span>
+              <span data-i18n="s11.col1_t">First win</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s11.c1_1">• $.ui.resolve(e) gives Box and Text.</li>
+              <li data-i18n="s11.c1_2">• Show a static line: RESEARCH · 0/5 sources.</li>
+              <li data-i18n="s11.c1_3">• claude --plugin-dir ./deep-research-board.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="above-prompt"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 12 -->
+    <section class="slide" id="s12" data-slide="12" data-title="Step 3: Count Sources in $.state">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s12.kicker">Step 3</span>
+        <h2 class="h2" data-i18n="s12.h2">Observe Tool Calls</h2>
+        <p class="lead" data-i18n="s12.lead">When Claude fetches a page, add it to the board state.</p>
+        <div class="two-col">
+          <div class="card card--defense">
+            <h3 class="card__title">
+              <span class="tag tag--blue">State</span>
+              <span data-i18n="s12.col1_t">Pattern</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s12.c1_1">• on("tool.call") for WebFetch / Read / Bash curl.</li>
+              <li data-i18n="s12.c1_2">• Push {url, title} into $.state.board.sources.</li>
+              <li data-i18n="s12.c1_3">• Hot reload wipes module vars — keep score in $.state.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="state-usage"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 13 -->
+    <section class="slide slide--alt" id="s13" data-slide="13" data-title="Step 4: Wire the Research Loop">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s13.kicker">Step 4</span>
+        <h2 class="h2" data-i18n="s13.h2">Prompt + Live Board</h2>
+        <p class="lead" data-i18n="s13.lead">Rewrite the prompt to force a research checklist; redraw after each fetch.</p>
+        <div class="two-col">
+          <div class="card card--focus">
+            <h3 class="card__title">
+              <span class="tag tag--orange">Loop</span>
+              <span data-i18n="s13.col1_t">Put together</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s13.c1_1">• prompt.submit — append: find ≥5 sources, cite, then conclude.</li>
+              <li data-i18n="s13.c1_2">• ui.render — paint question / sources / latest domains.</li>
+              <li data-i18n="s13.c1_3">• Pass with next(e) when the board is empty.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="forecast-band"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 14 -->
+    <section class="slide" id="s14" data-slide="14" data-title="Step 5: Validate & Test">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s14.kicker">Step 5</span>
+        <h2 class="h2" data-i18n="s14.h2">Validate & Test</h2>
+        <p class="lead" data-i18n="s14.lead">Prove the board counts sources without a live research session.</p>
+        <div class="two-col">
+          <div class="card card--defense">
+            <h3 class="card__title">
+              <span class="tag tag--green">QA</span>
+              <span data-i18n="s14.col1_t">Quality bar</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s14.c1_1">• claude plugin validate ./deep-research-board</li>
+              <li data-i18n="s14.c1_2">• Test: stub three WebFetch calls → sources === 3.</li>
+              <li data-i18n="s14.c1_3">• Assert the band text includes 3/5.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="validate-test"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 15 -->
+    <section class="slide slide--alt" id="s15" data-slide="15" data-title="Step 6: Share the Mod">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s15.kicker">Step 6</span>
+        <h2 class="h2" data-i18n="s15.h2">Share via Marketplace</h2>
+        <p class="lead" data-i18n="s15.lead">Ship like any plugin — marketplace add, install, reload.</p>
+        <div class="two-col">
+          <div class="card card--focus">
+            <h3 class="card__title">
+              <span class="tag tag--orange">Ship</span>
+              <span data-i18n="s15.col1_t">Install path</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s15.c1_1">• /plugin marketplace add your-org/my-mods</li>
+              <li data-i18n="s15.c1_2">• /plugin install deep-research-board@my-mods</li>
+              <li data-i18n="s15.c1_3">• Only install mods you trust — they run with Claude's access.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="share-marketplace"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 16 -->
+    <section class="slide" id="s16" data-slide="16" data-title="Stretch: Gate Weak Conclusions">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s16.kicker">Stretch A</span>
+        <h2 class="h2" data-i18n="s16.h2">Answer Move: Min Sources</h2>
+        <p class="lead" data-i18n="s16.lead">If Claude tries to conclude with fewer than 5 sources, deny and nudge.</p>
+        <div class="two-col">
+          <div class="card card--threat">
+            <h3 class="card__title">
+              <span class="tag tag--red">Guard</span>
+              <span data-i18n="s16.col1_t">How it feels</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s16.c1_1">• Detect "final answer" / conclusion turns.</li>
+              <li data-i18n="s16.c1_2">• return { deny: "Need 2 more sources…" }.</li>
+              <li data-i18n="s16.c1_3">• When sources ≥ 5, call next(e) and let it write.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="blast-radius"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 17 -->
+    <section class="slide slide--alt" id="s17" data-slide="17" data-title="Stretch: Sources Pane">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s17.kicker">Stretch B</span>
+        <h2 class="h2" data-i18n="s17.h2">Open /research Pane</h2>
+        <p class="lead" data-i18n="s17.lead">Register a slash command that lists every source collected this session.</p>
+        <div class="two-col">
+          <div class="card card--focus">
+            <h3 class="card__title">
+              <span class="tag tag--grape">Pane</span>
+              <span data-i18n="s17.col1_t">Observe + command</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s17.c1_1">• $.command.register({ name: "research" }).</li>
+              <li data-i18n="s17.c1_2">• command.run → $.ui.open sources list.</li>
+              <li data-i18n="s17.c1_3">• Same $.state.board the band already uses.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="replay-theater"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 18 -->
+    <section class="slide" id="s18" data-slide="18" data-title="Four Habits Worth Keeping">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s18.kicker">Craft</span>
+        <h2 class="h2" data-i18n="s18.h2">Four Habits</h2>
+        <p class="lead" data-i18n="s18.lead">Same habits as the official guide — applied to the research board.</p>
+        <div class="two-col">
+          <div class="card card--defense">
+            <h3 class="card__title">
+              <span class="tag tag--green">Habits</span>
+              <span data-i18n="s18.col1_t">Keep these</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s18.c1_1">• Lean on .claude-plugin/types/ Claude writes.</li>
+              <li data-i18n="s18.c1_2">• Read hasSurvey / bodyColumns from e.props.</li>
+              <li data-i18n="s18.c1_3">• Scoreboard in $.state; use --debug if the board vanishes.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="four-habits"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 19 -->
+    <section class="slide slide--alt" id="s19" data-slide="19" data-title="What Will You Mod Next?">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s19.kicker">Ideas</span>
+        <h2 class="h2" data-i18n="s19.h2">Ideas Beyond Research</h2>
+        <p class="lead" data-i18n="s19.lead">Once the board works, clone the pattern for other workflows.</p>
+        <div class="two-col">
+          <div class="card card--focus">
+            <h3 class="card__title">
+              <span class="tag tag--orange">Ideas</span>
+              <span data-i18n="s19.col1_t">Nearby mods</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s19.c1_1">• Citation / quote checker before publish.</li>
+              <li data-i18n="s19.c1_2">• Counter-claim nudge when all sources agree.</li>
+              <li data-i18n="s19.c1_3">• Export Markdown report of sources + claims.</li>
+            </ul>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="ideas-next"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 20 -->
+    <section class="slide" id="s20" data-slide="20" data-title="Takeaways & Resources">
+      <div class="slide__in">
+        <span class="kicker" data-i18n="s20.kicker">Close</span>
+        <h2 class="h2" data-i18n="s20.h2">You Can Build This Today</h2>
+        <p class="lead" data-i18n="s20.lead">Mods = live hooks + UI. Deep research is just a friendly example.</p>
+        <div class="two-col">
+          <div class="card card--defense">
+            <h3 class="card__title">
+              <span class="tag tag--green">Done</span>
+              <span data-i18n="s20.col1_t">Remember</span>
+            </h3>
+            <ul class="clean-list">
+              <li data-i18n="s20.c1_1">• Start from a job you already do (research), not abstract meters.</li>
+              <li data-i18n="s20.c1_2">• Three moves: observe sources, rewrite prompts, answer/deny.</li>
+              <li data-i18n="s20.c1_3">• Official guide still has the exact API details.</li>
+            </ul>
+            <div class="evidence-box evidence-box--blue" style="margin-top: 1.0vh;">
+              <span class="evidence-icon">💬</span>
+              <div class="evidence-text">
+                <strong data-i18n="s20.qa_title">Try next:</strong>
+                <ul class="evidence-qs">
+                  <li data-i18n="s20.q1">Describe Deep Research Board to Claude in a fresh session.</li>
+                  <li data-i18n="s20.q2">Add a rule: block conclusions until sources ≥ 5.</li>
+                  <li data-i18n="s20.q3">Skim the official API guide for event names.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="draw-wrap">
+            <div class="draw" data-fig="takeaways-mods"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <nav class="ctrl" aria-label="Slide Controls">
+    <button type="button" class="ctrl__btn" id="prevBtn" aria-label="Previous Slide" data-i18n="ui.prev">‹ Prev</button>
+    <div class="dots" id="dots" role="tablist"></div>
+    <span class="ctrl__count" id="count">1 / 20</span>
+    <button type="button" class="ctrl__btn ctrl__btn--accent" id="nextBtn" aria-label="Next Slide" data-i18n="ui.next">Next ›</button>
+  </nav>
+  <div class="progress" id="progress"></div>
+  <script src="assets/i18n.js?v=mods2"></script>
+  <script src="assets/rough.min.js"></script>
+  <script src="assets/diagrams.js?v=mods2"></script>
+  <script src="assets/deck.js"></script>
+</body>
+</html>

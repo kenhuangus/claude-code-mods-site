@@ -1,0 +1,9 @@
+node_modules/
+screenshots/
+package-lock.json
+_*.py
+_*.js
+_*.txt
+_slide2.html
+.DS_Store
+Thumbs.db
